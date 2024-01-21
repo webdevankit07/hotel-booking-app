@@ -10,6 +10,7 @@
     "author": "Ankit Yadav",
     "license": "ISC",
     "dependencies": {
+        "@types/multer": "^1.4.11",
         "bcrypt": "^5.1.1",
         "cloudinary": "^1.41.3",
         "cookie-parser": "^1.4.6",
