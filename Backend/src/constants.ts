@@ -1,1 +1,1 @@
-export const DB_NAME = 'HotelBooking_APP';
+export const DB_NAME: string = 'HotelBooking_APP';
