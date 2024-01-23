@@ -1,6 +1,8 @@
-import app from './app';
-import 'dotenv/config';
-import connectDB from './db/connectDB';
+import dotenv from 'dotenv';
+import app from './app.js';
+import connectDB from './db/connectDB.js';
+
+dotenv.config();
 
 (async () => {
     try {

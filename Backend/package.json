@@ -1,8 +1,9 @@
 {
+    "type": "module",
     "name": "hotel-booking-app-backend",
     "version": "1.0.0",
     "description": "A backend of hotel booking app",
-    "main": "src/index.ts",
+    "main": "src/index.js",
     "scripts": {
         "dev": "nodemon",
         "start": "node"
@@ -17,6 +18,7 @@
         "cors": "^2.8.5",
         "dotenv": "^16.3.2",
         "express": "^4.18.2",
+        "express-validator": "^7.0.1",
         "jsonwebtoken": "^9.0.2",
         "mongoose": "^8.1.0",
         "multer": "^1.4.5-lts.1"
