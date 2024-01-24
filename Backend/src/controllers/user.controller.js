@@ -1,4 +1,3 @@
-import { validationResult } from 'express-validator';
 import User from '../models/user.model.js';
 
 // generate Access and Refresh Token....
@@ -23,10 +22,6 @@ const generateAccessAndRefreshToken = async (userId) => {
 const registerUser = async (req, res) => {
     try {
         const { fullName, userName, email, password } = req.body;
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json({ status: 400, message: errors.array() });
-        }
 
         const isUserExisted = await User.findOne({ $or: [{ userName }, { email }] });
         if (isUserExisted) {
