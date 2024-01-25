@@ -1,6 +1,8 @@
 import User from '../models/user.model.js';
+import ApiResponse from '../utils/ApiResponse.js';
 import asyncHandler from '../utils/asyncHandler.js';
-import { ApiError } from '../utils/customErrorHandler.js';
+import customError, { ApiError } from '../utils/customErrorHandler.js';
+import { accessTokenOptions, refreshTokenOptions } from '../utils/utilts.js';
 
 // generate Access and Refresh Token....
 const generateAccessAndRefreshToken = async (userId) => {
@@ -14,10 +16,8 @@ const generateAccessAndRefreshToken = async (userId) => {
 
         return { accessToken, refreshToken };
     } catch (error) {
-        return res.status(500).json({
-            message: process.env.NODE_ENV === '' ? error.message : 'Internal server error',
-            status: false,
-        });
+        console.log(error.message);
+        new customError(500, error.message);
     }
 };
 
@@ -35,18 +35,49 @@ const registerUser = asyncHandler(async (req, res, next) => {
     });
 
     const { accessToken, refreshToken } = await generateAccessAndRefreshToken(user._id);
-    user.refreshToken = refreshToken;
-    await user.save();
 
     const createdUser = await User.findById(user._id).select('-password -refreshToken');
     ApiError(next, !createdUser, 409, 'Error while finding created user');
 
-    const options = { httpOnly: true, secure: process.env.NODE_ENV === 'production' };
+    // Response...
     return res
-        .cookie('accessToken', accessToken, options)
-        .cookie('refreshToken', refreshToken, options)
-        .status(200)
-        .json({ success: true, createdUser });
+        .cookie('accessToken', accessToken, accessTokenOptions)
+        .cookie('refreshToken', refreshToken, refreshTokenOptions)
+        .status(201)
+        .json(
+            new ApiResponse(
+                200,
+                { user: createdUser, accessToken, refreshToken },
+                'User successfully registered'
+            )
+        );
 });
 
-export { registerUser };
+const loginUser = asyncHandler(async (req, res, next) => {
+    const { email, password } = req.body;
+
+    const user = await User.findOne({ email });
+    ApiError(next, !user, 400, 'Invalid Credentials');
+
+    const isPasswordCorrect = await user.isPasswordCorrect(password);
+    ApiError(next, !isPasswordCorrect, 400, 'Invalid Credentials');
+
+    const { accessToken, refreshToken } = await generateAccessAndRefreshToken(user._id);
+
+    const loggedInUser = await User.findById(user._id).select('-password -refreshToken');
+
+    // Response...
+    return res
+        .cookie('accessToken', accessToken, accessTokenOptions)
+        .cookie('refreshToken', refreshToken, refreshTokenOptions)
+        .status(200)
+        .json(
+            new ApiResponse(
+                200,
+                { user: loggedInUser, accessToken, refreshToken },
+                'User logged in successfully'
+            )
+        );
+});
+
+export { registerUser, loginUser };

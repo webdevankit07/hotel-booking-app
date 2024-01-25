@@ -1,5 +1,5 @@
 const devErros = (res, err) => {
-    res.status(err.statusCode).json({
+    return res.status(err.statusCode).json({
         status: err.statusCode,
         message: err.message,
         stackTrace: err.stack,
@@ -9,9 +9,9 @@ const devErros = (res, err) => {
 
 const prodErrors = (res, err) => {
     if (err.isOperational) {
-        res.status(err.statusCode).json({ status: err.statusCode, message: err.message });
+        return res.status(err.statusCode).json({ status: err.statusCode, message: err.message });
     } else {
-        res.status(err.statusCode).json({
+        return res.status(err.statusCode).json({
             status: 'error',
             message: 'Something went wrong! Please try again later',
         });
