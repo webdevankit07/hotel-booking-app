@@ -1,25 +1,12 @@
 import User from '../models/user.model.js';
 import ApiResponse from '../utils/ApiResponse.js';
 import asyncHandler from '../utils/asyncHandler.js';
-import customError, { ApiError } from '../utils/customErrorHandler.js';
-import { accessTokenOptions, refreshTokenOptions } from '../utils/utilts.js';
-
-// generate Access and Refresh Token....
-const generateAccessAndRefreshToken = async (userId) => {
-    try {
-        const user = await User.findById(userId);
-        const accessToken = user.generateAccessToken();
-        const refreshToken = user.generateRefreshToken();
-
-        user.refreshToken = refreshToken;
-        await user.save({ validateBeforeSave: false });
-
-        return { accessToken, refreshToken };
-    } catch (error) {
-        console.log(error.message);
-        new customError(500, error.message);
-    }
-};
+import { ApiError } from '../utils/customErrorHandler.js';
+import {
+    generateAccessAndRefreshToken,
+    accessTokenOptions,
+    refreshTokenOptions,
+} from '../utils/utilts.js';
 
 const registerUser = asyncHandler(async (req, res, next) => {
     const { fullName, userName, email, password } = req.body;
