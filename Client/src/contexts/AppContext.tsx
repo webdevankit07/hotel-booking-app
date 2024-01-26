@@ -1,7 +1,7 @@
 import { createContext, useContext } from 'react';
 
 export type ToastMessage = {
-    message: string;
+    message: string | undefined;
     type: 'SUCCESS' | 'ERROR';
 };
 

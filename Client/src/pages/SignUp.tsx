@@ -3,8 +3,16 @@ import { SignUpFormData } from '../utils/Types';
 import { useEffect } from 'react';
 import axios from 'axios';
 import { apiBaseUrl } from '../conf/conf';
+import { useAppContext } from '../contexts/AppContext';
+
+interface ValidationError {
+    message: string;
+    errors: Record<string, string[]>;
+}
 
 const SignUp = () => {
+    const { showToast } = useAppContext();
+
     const {
         register,
         watch,
@@ -30,10 +38,15 @@ const SignUp = () => {
         };
 
         try {
-            const { data } = await axios.post(`${apiBaseUrl}/users/register`, formdata);
-            console.log(data);
+            await axios.post(`${apiBaseUrl}/users/register`, formdata);
+            showToast({ message: 'Registration successful', type: 'SUCCESS' });
         } catch (error) {
-            console.log(error);
+            if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
+                showToast({ message: error.response?.data.message, type: 'SUCCESS' });
+            } else {
+                const err = error as Error;
+                showToast({ message: err.message, type: 'SUCCESS' });
+            }
         }
     };
 
