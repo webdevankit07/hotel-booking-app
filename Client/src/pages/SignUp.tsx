@@ -38,11 +38,18 @@ const SignUp = () => {
     };
 
     return (
-        <form className='flex flex-col gap-5 px-4 mt-10' noValidate onSubmit={handleSubmit(handleFormSubmit)}>
+        <form
+            className='flex flex-col gap-5 px-4 mt-10 mb-10'
+            noValidate
+            onSubmit={handleSubmit(handleFormSubmit)}
+        >
             <h2 className='text-3xl font-bold text-center'>Create an account</h2>
             <div className='flex flex-col gap-5 md:flex-row'>
                 <div className='flex-1'>
-                    <label htmlFor='firstname' className='flex-1 text-sm font-semibold text-gray-700'>
+                    <label
+                        htmlFor='firstname'
+                        className='flex-1 text-sm font-semibold text-gray-700'
+                    >
                         First Name
                     </label>
                     <input
@@ -56,7 +63,9 @@ const SignUp = () => {
                             max: { value: 100, message: 'firstname must be atmost 100 characters' },
                         })}
                     />
-                    <p className='h-2 px-3 pt-1 pb-3 text-sm text-red-600'>{errors.firstname?.message}</p>
+                    <p className='h-2 px-3 pt-1 pb-3 text-sm text-red-600'>
+                        {errors.firstname?.message}
+                    </p>
                 </div>
                 <div className='flex-1'>
                     <label htmlFor='lastname' className='text-sm font-semibold text-gray-700'>
@@ -73,7 +82,9 @@ const SignUp = () => {
                             max: { value: 100, message: 'lastname must be atmost 100 characters' },
                         })}
                     />
-                    <p className='h-2 px-3 pt-1 pb-3 text-sm text-red-600'>{errors.lastname?.message}</p>
+                    <p className='h-2 px-3 pt-1 pb-3 text-sm text-red-600'>
+                        {errors.lastname?.message}
+                    </p>
                 </div>
             </div>
             <div>
@@ -91,7 +102,9 @@ const SignUp = () => {
                         max: { value: 100, message: 'firstname must be atmost 100 characters' },
                     })}
                 />
-                <p className='h-2 px-3 pt-1 pb-3 text-sm text-red-600'>{errors.userName?.message}</p>
+                <p className='h-2 px-3 pt-1 pb-3 text-sm text-red-600'>
+                    {errors.userName?.message}
+                </p>
             </div>
             <div>
                 <label htmlFor='email' className='flex-1 text-sm font-semibold text-gray-700'>
@@ -144,10 +157,15 @@ const SignUp = () => {
                         },
                     })}
                 />
-                <p className='h-2 px-3 pt-1 pb-3 text-sm text-red-600'>{errors.password?.message}</p>
+                <p className='h-2 px-3 pt-1 pb-3 text-sm text-red-600'>
+                    {errors.password?.message}
+                </p>
             </div>
             <div>
-                <label htmlFor='confirmPassword' className='flex-1 text-sm font-semibold text-gray-700'>
+                <label
+                    htmlFor='confirmPassword'
+                    className='flex-1 text-sm font-semibold text-gray-700'
+                >
                     Confirm Password
                 </label>
                 <input
@@ -162,7 +180,9 @@ const SignUp = () => {
                         },
                     })}
                 />
-                <p className='h-2 px-3 pt-1 pb-3 text-sm text-red-600'>{errors.confirmPassword?.message}</p>
+                <p className='h-2 px-3 pt-1 pb-3 text-sm text-red-600'>
+                    {errors.confirmPassword?.message}
+                </p>
             </div>
             <button
                 type='submit'
