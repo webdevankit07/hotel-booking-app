@@ -15,11 +15,11 @@ export const queryClient = new QueryClient({
 });
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-    <Provider store={store}>
-        <AppContextProvider>
-            <QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={queryClient}>
+        <Provider store={store}>
+            <AppContextProvider>
                 <App />
-            </QueryClientProvider>
-        </AppContextProvider>
-    </Provider>
+            </AppContextProvider>
+        </Provider>
+    </QueryClientProvider>
 );

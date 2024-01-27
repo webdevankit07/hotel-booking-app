@@ -11,6 +11,6 @@ router.route('/register').post(validate(signupSchema), registerUser);
 router.route('/login').post(validate(loginSchema), loginUser);
 
 // Private Routes...
-router.route('/validate-token').get(verifyToken, validateToken);
+router.route('/auth/validate-token').get(verifyToken, validateToken);
 
 export { router as userRouter };

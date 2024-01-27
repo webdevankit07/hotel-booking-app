@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
+import { useAppContext } from '../contexts/AppContext';
 
 const Header = () => {
+    const { isLoggedIn } = useAppContext();
     return (
         <div className='py-6 bg-blue-800'>
             <div className='container mx-auto'>
@@ -9,12 +11,36 @@ const Header = () => {
                         <Link to={'/'}>Holidays.com</Link>
                     </span>
                     <span className='flex space-x-2'>
-                        <Link
-                            to={'/auth/sign-in'}
-                            className='flex items-center px-3 font-bold text-blue-600 transition-all duration-100 ease-in-out bg-white rounded-md hover:bg-gray-200'
-                        >
-                            Sign In
-                        </Link>
+                        {isLoggedIn ? (
+                            <>
+                                <div className='flex gap-3 mr-5'>
+                                    <Link
+                                        to={'/my-bookings'}
+                                        className='flex items-center px-3 font-bold text-blue-600 transition-all duration-100 ease-in-out bg-white rounded-md hover:bg-gray-200'
+                                    >
+                                        My Bookings
+                                    </Link>
+                                    <Link
+                                        to={'/my-hotels'}
+                                        className='flex items-center px-3 font-bold text-blue-600 transition-all duration-100 ease-in-out bg-white rounded-md hover:bg-gray-200'
+                                    >
+                                        My Hotels
+                                    </Link>
+                                </div>
+                                <button className='flex items-center px-3 font-bold text-blue-600 transition-all duration-100 ease-in-out bg-white rounded-md hover:bg-gray-200'>
+                                    Sign out
+                                </button>
+                            </>
+                        ) : (
+                            <>
+                                <Link
+                                    to={'/auth/sign-in'}
+                                    className='flex items-center px-3 font-bold text-blue-600 transition-all duration-100 ease-in-out bg-white rounded-md hover:bg-gray-200'
+                                >
+                                    Sign In
+                                </Link>
+                            </>
+                        )}
                     </span>
                 </div>
             </div>
