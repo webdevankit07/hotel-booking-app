@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import { apiBaseUrl } from '../conf/conf';
 import { useAppContext } from '../contexts/AppContext';
+import { useNavigate } from 'react-router-dom';
 
 interface ValidationError {
     message: string;
@@ -12,6 +13,7 @@ interface ValidationError {
 
 const SignUp = () => {
     const { showToast } = useAppContext();
+    const navigate = useNavigate();
 
     const {
         register,
@@ -24,28 +26,27 @@ const SignUp = () => {
     // Form Reset...
     useEffect(() => {
         if (isSubmitSuccessful) {
-            // reset();
+            reset();
         }
     }, [isSubmitSuccessful, reset]);
 
     // Form submit...
     const handleFormSubmit: SubmitHandler<SignUpFormData> = async (formData) => {
-        const formdata = {
-            fullName: `${formData.firstname} ${formData.lastname}`,
-            userName: formData.userName,
-            email: formData.email,
-            password: formData.password,
-        };
-
         try {
-            await axios.post(`${apiBaseUrl}/users/register`, formdata);
+            await axios.post(`${apiBaseUrl}/users/register`, {
+                fullName: `${formData.firstname} ${formData.lastname}`,
+                userName: formData.userName,
+                email: formData.email,
+                password: formData.password,
+            });
             showToast({ message: 'Registration successful', type: 'SUCCESS' });
+            navigate('/');
         } catch (error) {
             if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
-                showToast({ message: error.response?.data.message, type: 'SUCCESS' });
+                showToast({ message: error.response?.data.message, type: 'ERROR' });
             } else {
                 const err = error as Error;
-                showToast({ message: err.message, type: 'SUCCESS' });
+                showToast({ message: err.message, type: 'ERROR' });
             }
         }
     };
