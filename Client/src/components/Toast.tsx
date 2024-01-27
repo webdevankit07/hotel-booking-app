@@ -20,7 +20,7 @@ const Toast = ({ message, type, onClose }: ToastProps) => {
     return (
         <div
             className={`fixed top-4 right-4 z-50 p-4 rounded-md text-white max-w-md ${
-                type === 'SUCCESS' ? 'bg-green-600' : 'bg-red-600'
+                type === 'SUCCESS' ? 'bg-green-500' : 'bg-red-600'
             }`}
         >
             <div className='flex items-center justify-center'>

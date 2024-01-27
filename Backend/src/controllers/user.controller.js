@@ -23,9 +23,6 @@ const registerUser = asyncHandler(async (req, res, next) => {
 
     const { accessToken, refreshToken } = await generateAccessAndRefreshToken(user._id);
 
-    const createdUser = await User.findById(user._id).select('-password -refreshToken');
-    ApiError(next, !createdUser, 409, 'Error while finding created user');
-
     // Response...
     return res
         .cookie('accessToken', accessToken, accessTokenOptions)
@@ -34,7 +31,7 @@ const registerUser = asyncHandler(async (req, res, next) => {
         .json(
             new ApiResponse(
                 200,
-                { user: createdUser, accessToken, refreshToken },
+                { userId: user._id, accessToken, refreshToken },
                 'User successfully registered'
             )
         );
@@ -61,10 +58,16 @@ const loginUser = asyncHandler(async (req, res, next) => {
         .json(
             new ApiResponse(
                 200,
-                { user: loggedInUser, accessToken, refreshToken },
+                { userId: loggedInUser._id, accessToken, refreshToken },
                 'User logged in successfully'
             )
         );
 });
 
-export { registerUser, loginUser };
+const validateToken = asyncHandler(async (req, res) => {
+    res.status(200).json(
+        new ApiResponse(200, { userId: req.user._id }, 'user logged in successfully')
+    );
+});
+
+export { registerUser, loginUser, validateToken };

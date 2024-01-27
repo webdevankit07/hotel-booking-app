@@ -1,7 +1,8 @@
 import { Router } from 'express';
-import { loginUser, registerUser } from '../controllers/user.controller.js';
+import { loginUser, registerUser, validateToken } from '../controllers/user.controller.js';
 import validate from '../middlewares/validator.middleware.js';
 import { loginSchema, signupSchema } from '../validators/auth.validator.js';
+import verifyToken from '../middlewares/auth.middleware.js';
 
 const router = Router();
 
@@ -10,5 +11,6 @@ router.route('/register').post(validate(signupSchema), registerUser);
 router.route('/login').post(validate(loginSchema), loginUser);
 
 // Private Routes...
+router.route('/validate-token').get(verifyToken, validateToken);
 
 export { router as userRouter };

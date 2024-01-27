@@ -2,7 +2,6 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { SignUpFormData } from '../utils/Types';
 import { useEffect } from 'react';
 import axios from 'axios';
-import { apiBaseUrl } from '../conf/conf';
 import { useAppContext } from '../contexts/AppContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -33,7 +32,7 @@ const SignUp = () => {
     // Form submit...
     const handleFormSubmit: SubmitHandler<SignUpFormData> = async (formData) => {
         try {
-            await axios.post(`${apiBaseUrl}/users/register`, {
+            await axios.post(`/api/v1/users/register`, {
                 fullName: `${formData.firstname} ${formData.lastname}`,
                 userName: formData.userName,
                 email: formData.email,
