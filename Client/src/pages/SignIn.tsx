@@ -1,7 +1,7 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { SigninFormData } from '../utils/Types';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAppContext } from '../contexts/AppContext';
 import { useQueryClient } from '@tanstack/react-query';
 
@@ -40,7 +40,7 @@ const SignIn = () => {
 
     return (
         <form
-            className='flex flex-col gap-5 mt-10'
+            className='flex flex-col max-w-2xl gap-5 px-4 mx-auto mt-10'
             noValidate
             onSubmit={handleSubmit(handleFormSubmit)}
         >
@@ -91,13 +91,24 @@ const SignIn = () => {
                     {errors.password?.message}
                 </p>
             </div>
-            <button
-                type='submit'
-                disabled={!isDirty}
-                className='p-2 text-xl font-semibold text-white bg-blue-600 rounded hover:bg-blue-500 disabled:bg-blue-400'
-            >
-                Create Account
-            </button>
+            <div className='flex items-center justify-between -mt-3 text-sm'>
+                <span>
+                    Not Register Yet?
+                    <Link
+                        to={'/auth/sign-up'}
+                        className='mx-1 font-semibold text-blue-700 underline'
+                    >
+                        Create an account here
+                    </Link>
+                </span>
+                <button
+                    type='submit'
+                    disabled={!isDirty}
+                    className='px-4 py-2 text-xl font-semibold text-white bg-blue-600 rounded hover:bg-blue-500 disabled:bg-blue-400'
+                >
+                    Sign In
+                </button>
+            </div>
         </form>
     );
 };

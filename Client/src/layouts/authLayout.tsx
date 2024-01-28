@@ -12,7 +12,6 @@ const AuthLayout = () => {
                 </div>
                 <Footer />
             </div>
-            ;
         </>
     );
     // }
