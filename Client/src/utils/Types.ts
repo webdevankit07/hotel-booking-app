@@ -7,6 +7,12 @@ export type SignUpFormData = {
     password: string;
     confirmPassword: string;
 };
+
+//! ********************  SignIn Component ********************* //
+export type SigninFormData = {
+    email: string;
+    password: string;
+};
 //!
 //!
 //!

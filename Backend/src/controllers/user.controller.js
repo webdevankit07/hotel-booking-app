@@ -6,8 +6,9 @@ import {
     generateAccessAndRefreshToken,
     accessTokenOptions,
     refreshTokenOptions,
-} from '../utils/utilts.js';
+} from '../utils/utils.js';
 
+// ------------------ Controllers --------------------------------//
 const registerUser = asyncHandler(async (req, res, next) => {
     const { fullName, userName, email, password } = req.body;
 
@@ -65,9 +66,18 @@ const loginUser = asyncHandler(async (req, res, next) => {
 });
 
 const validateToken = asyncHandler(async (req, res) => {
-    res.status(200).json(
-        new ApiResponse(200, { userId: req.user._id }, 'user logged in successfully')
-    );
+    res.status(200).json(new ApiResponse(200, { userId: req.user._id }, 'user valid'));
 });
 
-export { registerUser, loginUser, validateToken };
+const logoutUser = asyncHandler(async (req, res) => {
+    await User.findByIdAndUpdate(req.user._id, { $unset: { refreshToken: 1 } });
+
+    // Response....
+    const options = { httpOnly: true, secure: true };
+    res.status(200)
+        .clearCookie('accessToken', options)
+        .clearCookie('refreshToken', options)
+        .json(new ApiResponse(200, { userId: req.user._id }, 'user logged out successfully'));
+});
+
+export { registerUser, loginUser, validateToken, logoutUser };

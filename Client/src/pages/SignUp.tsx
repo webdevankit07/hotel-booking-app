@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import { useAppContext } from '../contexts/AppContext';
 import { useNavigate } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface ValidationError {
     message: string;
@@ -11,6 +12,7 @@ interface ValidationError {
 }
 
 const SignUp = () => {
+    const queryClient = useQueryClient();
     const { showToast } = useAppContext();
     const navigate = useNavigate();
 
@@ -39,6 +41,7 @@ const SignUp = () => {
                 password: formData.password,
             });
             showToast({ message: 'Registration successful', type: 'SUCCESS' });
+            await queryClient.invalidateQueries('validateToken');
             navigate('/');
         } catch (error) {
             if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error)) {
@@ -52,7 +55,7 @@ const SignUp = () => {
 
     return (
         <form
-            className='flex flex-col gap-5 px-4 mt-10 mb-10'
+            className='flex flex-col gap-5 px-4 my-10'
             noValidate
             onSubmit={handleSubmit(handleFormSubmit)}
         >
