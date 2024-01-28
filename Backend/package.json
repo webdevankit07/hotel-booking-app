@@ -6,8 +6,8 @@
     "main": "src/index.js",
     "scripts": {
         "dev": "nodemon",
-        "start": "node",
-        "e2e": "cross-env DOTENV_CONFIG_PATH=.env.e2e nodemon"
+        "build": "npm install",
+        "start": "node src/index.js"
     },
     "author": "Ankit Yadav",
     "license": "ISC",
