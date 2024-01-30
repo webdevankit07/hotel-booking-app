@@ -16,7 +16,7 @@ const Header = () => {
                         {!isLoggedIn ? (
                             <>
                                 <Link
-                                    to={"/auth/sign-in"}
+                                    to={"/sign-in"}
                                     className="flex items-center px-3 font-bold text-blue-600 transition-all duration-100 ease-in-out bg-white rounded-md hover:bg-gray-200"
                                 >
                                     Sign In

@@ -1,0 +1,17 @@
+export const hotelTypes = [
+    "Budget",
+    "Boutique",
+    "Luxury",
+    "Ski Resort",
+    "Business",
+    "Family",
+    "Romantic",
+    "Hiking Resort",
+    "Cabin",
+    "Beach Resort",
+    "Glof Resort",
+    "Motel",
+    "All Inclusive",
+    "Pet Friendly",
+    "Self Catering",
+];
