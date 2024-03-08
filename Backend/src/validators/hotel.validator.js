@@ -1,27 +1,14 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 export const hotelSChema = z.object({
-    name: z.string({ required_error: "Hotel name is required" }),
-    city: z.string({ required_error: "City name is required" }),
-    country: z.string({ required_error: "Country name is required" }),
-    description: z.string({ required_error: "Hotel description is required" }),
-    type: z.string({ required_error: "Hotel type is required" }),
-    adultCount: z.number({
-        required_error: "adultCount is required",
-        invalid_type_error: "adultCount must be a number",
-    }),
-    childCount: z.number({
-        required_error: "childCount is required",
-        invalid_type_error: "childCount must be a number",
-    }),
-    facilites: z.string({ required_error: "facilites is required" }).array(),
-    pricePerNight: z.number({
-        required_error: "pricePerNight is required",
-        invalid_type_error: "pricePerNight must be a number",
-    }),
-    starRating: z.number({
-        required_error: "startRating is required",
-        invalid_type_error: "starRating must be a number",
-    }),
-    imageFiles: z.string({ required_error: "imageFiles is required" }).array(),
+    name: z.string({ required_error: 'hotel name is required' }),
+    city: z.string({ required_error: 'city name is required' }),
+    country: z.string({ required_error: 'country name is required' }),
+    description: z.string({ required_error: 'hotel description is required' }),
+    type: z.string({ required_error: 'hotel type is required' }),
+    adultCount: z.optional(z.string({ required_error: 'adultCount is required' })),
+    childCount: z.optional(z.string({ required_error: 'childCount is required' })),
+    facilities: z.optional(z.string({ required_error: 'facilites is required' }).array()),
+    pricePerNight: z.string({ required_error: 'pricePerNight is required' }),
+    starRating: z.optional(z.string({ required_error: 'startRating is required' })),
 });

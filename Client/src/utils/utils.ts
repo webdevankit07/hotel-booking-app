@@ -2,7 +2,7 @@ export const hotelTypes = [
     "Budget",
     "Boutique",
     "Luxury",
-    "Ski Resort",
+    "Sky Resort",
     "Business",
     "Family",
     "Romantic",
@@ -15,3 +15,5 @@ export const hotelTypes = [
     "Pet Friendly",
     "Self Catering",
 ];
+
+export const hotelFacilities = ["Free Wifi", "Parking", "Airport", "Family Rooms", "Non-Smoking Rooms", "Outdoor Pool", "Spa", "Fitness Center"];

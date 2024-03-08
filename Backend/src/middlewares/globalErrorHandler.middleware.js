@@ -1,3 +1,5 @@
+import { NODE_ENV } from '../conf/index.js';
+
 const devErros = (res, err) => {
     return res.status(err.statusCode).json({
         status: err.statusCode,
@@ -18,13 +20,13 @@ const prodErrors = (res, err) => {
     }
 };
 
-const globalErrorHandler = (err, req, res, next) => {
+const globalErrorHandler = (err, _, res, next) => {
     err.statusCode = err.statusCode || 500;
     err.status = err.status || 'error';
 
-    if (process.env.NODE_ENV === 'development') {
+    if (NODE_ENV === 'development') {
         devErros(res, err);
-    } else if (process.env.NODE_ENV === 'production') {
+    } else if (NODE_ENV === 'production') {
         prodErrors(res, err);
     }
 };

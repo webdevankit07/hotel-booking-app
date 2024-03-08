@@ -1,31 +1,43 @@
-import express from "express";
-import cors from "cors";
-import cookieParser from "cookie-parser";
-import path from "path";
-import { fileURLToPath } from "url";
+import express from 'express';
+import cors from 'cors';
+import cookieParser from 'cookie-parser';
+
+// Routes import...
+import { hotelRoutes } from './routes/myHotels.routes.js';
+import { authRoutes } from './routes/auth.routes.js';
+import { FRONTEND_URL } from './conf/index.js';
+
+// import path from 'path';
+// import { fileURLToPath } from 'url';
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = path.dirname(__filename);
+// app.use(express.static(path.join(__dirname, '../../Client/dist')));
 
 const app = express();
 
+const corsOptions = {
+    origin: FRONTEND_URL,
+    credentials: true,
+    optionSuccessStatus: 200,
+    Headers: true,
+    exposedHeaders: 'Set-Cookie',
+    methods: ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Access-Control-Allow-Origin', 'Content-Type', 'Authorization'],
+};
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(
-    cors({
-        origin: process.env.FRONTEND_URL,
-        credentials: true,
-    })
-);
 app.use(cookieParser());
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-app.use(express.static(path.join(__dirname, "../../Client/dist")));
-
-// Routes import...
-import { userRouter } from "./routes/user.routes.js";
-import { hotelRouter } from "./routes/myHotels.routes.js";
-
 // Routes declaration...
-app.use("/api/v1/users", userRouter);
-app.use("/api/v1/my-hotels", hotelRouter);
+app.get('/', (_, res) => {
+    res.status(200).json({
+        status: 'ok',
+        message: 'I am home route. Sever is live',
+    });
+});
+
+app.use('/api/v1/user', authRoutes);
+app.use('/api/v1/my-hotels', hotelRoutes);
 
 export default app;

@@ -1,26 +1,25 @@
-import Hotel from "../models/hotel.model.js";
-import uploadOnCloudinary from "../services/cloudinary.js";
-import ApiResponse from "../utils/ApiResponse.js";
-import asyncHandler from "../utils/asyncHandler.js";
+import Hotel from '../models/hotel.model.js';
+import uploadOnCloudinary from '../services/cloudinary.js';
+import ApiResponse from '../utils/ApiResponse.js';
+import asyncHandler from '../utils/asyncHandler.js';
 
 const addNewHotel = asyncHandler(async (req, res, next) => {
-    const newHotel = req.body;
+    const hotelData = req.body;
     const { imageFiles } = req.files;
+    console.log({ hotelData, imageFiles });
 
-    const uploadPromises = imageFiles.map(async (image) => {
+    const imagesUploading = imageFiles.map(async (image) => {
         const uploadedFile = await uploadOnCloudinary(image.path);
         return uploadedFile.url;
     });
 
-    const imageUrls = await Promise.all(uploadPromises);
-    newHotel.imageUrls = imageUrls;
-    newHotel.userId = req.user._id;
-    console.log(newHotel);
+    const imageUrls = await Promise.all(imagesUploading);
+    hotelData.imageUrls = imageUrls;
+    hotelData.userId = req.user._id;
+    const newHotel = new Hotel(hotelData);
+    await newHotel.save();
 
-    const hotel = new Hotel(newHotel);
-    await hotel.save();
-
-    res.status(201).json(new ApiResponse(201, hotel, "Hotel added successfully"));
+    res.status(201).json(new ApiResponse(201, newHotel, 'Hotel added successfully'));
 });
 
 export { addNewHotel };

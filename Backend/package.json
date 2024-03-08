@@ -6,8 +6,8 @@
     "main": "src/index.js",
     "scripts": {
         "dev": "nodemon",
-        "build": "npm install",
-        "start": "node src/index.js"
+        "start": "node src/index.js",
+        "build": "npm install"
     },
     "author": "Ankit Yadav",
     "license": "ISC",
