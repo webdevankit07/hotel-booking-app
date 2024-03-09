@@ -63,3 +63,14 @@ export const validateToken = async () => {
         throw new Error(err);
     }
 };
+
+// My-Hotels...*:
+export const getMyHotels = async () => {
+    try {
+        const { data } = await Axios.get('/my-hotels');
+        return data;
+    } catch (error) {
+        const err = await handleAxiosError(error);
+        throw new Error(err);
+    }
+};

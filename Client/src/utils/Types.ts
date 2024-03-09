@@ -39,4 +39,32 @@ export type SigninFormData = {
 //!
 //!
 //!
-//! ********************   Component Types ********************* //
+//! ********************   AddHotel Types ********************* //
+export type HotelType = {
+    name: string;
+    city: string;
+    country: string;
+    description: string;
+    type: string;
+    adultCount: number;
+    childCount: number;
+    facilities: string[];
+    pricePerNight: number;
+    starRating: number;
+    imageFiles: FileList;
+};
+export type ResHotelType = {
+    _id: string;
+    UserId: string;
+    name: string;
+    city: string;
+    country: string;
+    description: string;
+    type: string;
+    adultCount: number;
+    childCount: number;
+    facilities: string[];
+    pricePerNight: number;
+    starRating: number;
+    imageFiles: FileList;
+};

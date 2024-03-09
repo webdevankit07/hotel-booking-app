@@ -4,20 +4,7 @@ import { hotelFacilities, hotelTypes } from '../utils/utils';
 import { useAppContext } from '../contexts/AppContext';
 import { useNavigate } from 'react-router-dom';
 import { Axios, handleAxiosError } from '../api/apiClient';
-
-export type HotelFormData = {
-    name: string;
-    city: string;
-    country: string;
-    description: string;
-    type: string;
-    adultCount: number;
-    childCount: number;
-    facilities: string[];
-    pricePerNight: number;
-    starRating: number;
-    imageFiles: FileList;
-};
+import { HotelType } from '../utils/Types';
 
 const AddHotel = () => {
     const [isLoading, setLoading] = useState<boolean>(false);
@@ -29,13 +16,13 @@ const AddHotel = () => {
         formState: { errors, isDirty },
         handleSubmit,
         watch,
-    } = useForm<HotelFormData>();
+    } = useForm<HotelType>();
 
     const typeWatch = watch('type');
     const facilitesWatch = watch('facilities');
 
     //! Form Submitting.........
-    const handleFormSubmit = async (data: HotelFormData) => {
+    const handleFormSubmit = async (data: HotelType) => {
         const formData = new FormData();
         formData.append('name', data.name);
         formData.append('city', data.city);
