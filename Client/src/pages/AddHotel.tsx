@@ -37,41 +37,23 @@ const AddHotel = () => {
     //! Form Submitting.........
     const handleFormSubmit = async (data: HotelFormData) => {
         const formData = new FormData();
-
-        if (data.imageFiles.length) {
-            for (let i = 0; i < data.imageFiles.length; i++) {
-                const file: File = data.imageFiles[i];
-                formData.append('imageFiles', file);
-            }
-        }
-        if (data.facilities.length) {
-            for (let i = 0; i < data.facilities.length; i++) {
-                const facility = data.facilities[i];
-                formData.append('facilities', facility);
-            }
-        }
         formData.append('name', data.name);
         formData.append('city', data.city);
         formData.append('country', data.country);
         formData.append('description', data.description);
-        formData.append('pricePerNight', data.pricePerNight);
-        formData.append('starRating', data.starRating);
         formData.append('type', data.type);
-        formData.append('adultCount', data.adultCount);
-        formData.append('childCount', data.childCount);
+        formData.append('pricePerNight', data.pricePerNight.toString());
+        formData.append('starRating', data.starRating.toString());
+        formData.append('adultCount', data.adultCount.toString());
+        formData.append('childCount', data.childCount.toString());
+        data.facilities.forEach((facility, index) => formData.append(`facilities[${index}]`, facility));
+        Array.from(data.imageFiles).forEach((imageFile) => formData.append(`imageFiles`, imageFile));
 
         setLoading(true);
         try {
-            // console.log();
-
-            const { data: resData } = await Axios.post(`/my-hotels/add-hotel`, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            });
-            console.log(resData.data);
+            await Axios.post(`/my-hotels/add-hotel`, formData);
             setLoading(false);
-            showToast({ message: 'Hotel added successfully', type: 'SUCCESS' });
+            showToast({ message: 'Hotel Saved!', type: 'SUCCESS' });
             navigate('/');
         } catch (error) {
             const err = await handleAxiosError(error);
@@ -312,7 +294,7 @@ const AddHotel = () => {
             {/*//! ................ Submit Button Section ............... */}
             <button
                 type='submit'
-                disabled={!isDirty}
+                disabled={!isDirty || isLoading}
                 className='w-full px-3 py-2 font-semibold text-white bg-blue-600 rounded disabled:bg-blue-400'
             >
                 {isLoading ? 'Saving...' : 'Add Hotel'}

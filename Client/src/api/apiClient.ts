@@ -63,15 +63,3 @@ export const validateToken = async () => {
         throw new Error(err);
     }
 };
-
-// Add Hotel...
-export const addMyHotel = async (hotelFormData: FormData) => {
-    try {
-        const { data } = await Axios.post(`/my-hotels`, hotelFormData);
-        console.log(data);
-        return data;
-    } catch (error) {
-        const err = await handleAxiosError(error);
-        throw new Error(err);
-    }
-};
