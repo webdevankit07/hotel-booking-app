@@ -13,6 +13,7 @@ import MyBookings from './pages/MyBookings';
 import MyHotels from './pages/MyHotels';
 import Layout from './layouts/Layout';
 import AddHotel from './pages/AddHotel';
+import EditHotel from './pages/EditHotel';
 
 const App = () => {
     return (
@@ -26,6 +27,7 @@ const App = () => {
                     <Route path='/my-bookings' element={<MyBookings />} />
                     <Route path='/my-hotels' element={<MyHotels />} />
                     <Route path='/add-hotel' element={<AddHotel />} />
+                    <Route path='/edit-hotel/:hotelId' element={<EditHotel />} />
                     <Route path='/sign-up' element={<SignUp />} />
                     <Route path='/sign-in' element={<SignIn />} />
                 </Route>

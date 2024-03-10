@@ -3,7 +3,6 @@ import { BiHotel, BiMoney, BiStar } from 'react-icons/bi';
 import { Link } from 'react-router-dom';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { getMyHotels } from '../api/apiClient';
-import { ResHotelType } from '../utils/Types';
 
 const MyHotels = () => {
     const { data: hotelData } = useQuery({
@@ -28,10 +27,11 @@ const MyHotels = () => {
                 </Link>
             </span>
             <div className='grid grid-cols-1 gap-8'>
-                {hotelData.data.map((hotel: ResHotelType) => (
+                {hotelData.map((hotel) => (
                     <div
                         data-testid='hotel-card'
                         className='flex flex-col justify-between gap-5 p-8 border rounded-lg border-slate-300'
+                        key={hotel._id}
                     >
                         <h2 className='text-2xl font-bold'>{hotel.name}</h2>
                         <div className='whitespace-pre-line'>{hotel.description}</div>

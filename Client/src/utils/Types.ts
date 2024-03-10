@@ -52,6 +52,7 @@ export type HotelType = {
     pricePerNight: number;
     starRating: number;
     imageFiles: FileList;
+    imageUrls: string[];
 };
 export type ResHotelType = {
     _id: string;

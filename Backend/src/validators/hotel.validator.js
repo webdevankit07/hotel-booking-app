@@ -11,4 +11,5 @@ export const hotelSChema = z.object({
     facilities: z.optional(z.string({ required_error: 'facilites is required' }).array()),
     pricePerNight: z.string({ required_error: 'pricePerNight is required' }),
     starRating: z.optional(z.string({ required_error: 'startRating is required' })),
+    imageUrls: z.optional(z.string({ required_error: 'startRating is required' }).array()),
 });

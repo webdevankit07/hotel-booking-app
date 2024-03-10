@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { SignUpFormData, SigninFormData, ValidationError } from '../utils/Types';
+import { ResHotelType, SignUpFormData, SigninFormData, ValidationError } from '../utils/Types';
 import { apiBaseUrl } from '../conf';
 
 // Axios...
@@ -68,7 +68,18 @@ export const validateToken = async () => {
 export const getMyHotels = async () => {
     try {
         const { data } = await Axios.get('/my-hotels');
-        return data;
+        return data.data as ResHotelType[];
+    } catch (error) {
+        const err = await handleAxiosError(error);
+        throw new Error(err);
+    }
+};
+
+// My-Hotel-Details...*:
+export const getMyHotelDetails = async (hotelId: string) => {
+    try {
+        const { data } = await Axios.get(`/my-hotels/${hotelId}`);
+        return data.data as ResHotelType;
     } catch (error) {
         const err = await handleAxiosError(error);
         throw new Error(err);
