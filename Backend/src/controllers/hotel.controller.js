@@ -4,6 +4,23 @@ import ApiResponse from '../utils/ApiResponse.js';
 import asyncHandler from '../utils/asyncHandler.js';
 import customError from '../utils/customErrorHandler.js';
 
+export const getHotels = asyncHandler(async (req, res, next) => {
+    const limit = 5;
+    const pageNumber = parseInt(req.query.page ? req.query.page.toString() : '1');
+    const skip = (pageNumber - 1) * limit;
+
+    const hotels = await Hotel.find().skip(skip).limit(limit);
+    const total = await Hotel.countDocuments();
+
+    res.status(200).json(
+        new ApiResponse(
+            200,
+            { data: hotels, pagination: { total, pageNo: pageNumber, pages: Math.ceil(total / limit) } },
+            'success'
+        )
+    );
+});
+
 export const addNewHotel = asyncHandler(async (req, res, next) => {
     const hotelData = req.body;
     const { imageFiles } = req.files;
@@ -59,9 +76,7 @@ export const updateHotel = asyncHandler(async (req, res, next) => {
             return uploadedFile.url;
         });
         const updatedImageUrls = await Promise.all(imagesUploading);
-        console.log({ updatedImageUrls, prevImg: updatedHotel });
         const images = [...updatedImageUrls, ...(updatedHotel.imageUrls || [])];
-        console.log(images);
         hotel.imageUrls = images;
         await hotel.save();
     }

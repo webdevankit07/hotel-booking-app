@@ -3,7 +3,7 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 
 // Routes import...
-import { hotelRoutes } from './routes/myHotels.routes.js';
+import { hotelRoutes } from './routes/hotels.routes.js';
 import { authRoutes } from './routes/auth.routes.js';
 import { FRONTEND_URL } from './conf/index.js';
 

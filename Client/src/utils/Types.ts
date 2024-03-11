@@ -19,6 +19,26 @@ export type AppContextType = {
 //!
 //!
 //!
+//! ********************  SearchContext Types ********************* //
+export type SearchContextType = {
+    destination: string;
+    checkIn: Date;
+    checkOut: Date;
+    adultCount: number;
+    childCount: number;
+    hotelId: string;
+    saveSearchValues: (
+        destination: string,
+        checkIn: Date,
+        checkOut: Date,
+        adultCount: number,
+        childCount: number
+    ) => void;
+};
+
+//!
+//!
+//!
 //! ********************  SignUp Component Types ********************* //
 export type SignUpFormData = {
     firstname: string;
@@ -68,4 +88,10 @@ export type ResHotelType = {
     pricePerNight: number;
     starRating: number;
     imageFiles: FileList;
+};
+
+//! ********************   Search Hotel Types ********************* //
+export type SearchHotelType = {
+    data: HotelType[];
+    pagination: { total: number; pageNo: number; pages: number };
 };

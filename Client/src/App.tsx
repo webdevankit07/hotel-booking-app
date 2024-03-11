@@ -14,6 +14,9 @@ import MyHotels from './pages/MyHotels';
 import Layout from './layouts/Layout';
 import AddHotel from './pages/AddHotel';
 import EditHotel from './pages/EditHotel';
+import Search from './pages/Search';
+import PrivateRoute from './privateRoutes/PrivateRoute';
+import PrivateAuthRoute from './privateRoutes/PrivateAuthRoute';
 
 const App = () => {
     return (
@@ -22,14 +25,19 @@ const App = () => {
             <Routes>
                 <Route element={<MainLayout />}>
                     <Route path='/' element={<Home />} />
+                    <Route path='/search' element={<Search />} />
                 </Route>
                 <Route element={<Layout />}>
-                    <Route path='/my-bookings' element={<MyBookings />} />
-                    <Route path='/my-hotels' element={<MyHotels />} />
-                    <Route path='/add-hotel' element={<AddHotel />} />
-                    <Route path='/edit-hotel/:hotelId' element={<EditHotel />} />
-                    <Route path='/sign-up' element={<SignUp />} />
-                    <Route path='/sign-in' element={<SignIn />} />
+                    <Route element={<PrivateRoute />}>
+                        <Route path='/my-bookings' element={<MyBookings />} />
+                        <Route path='/my-hotels' element={<MyHotels />} />
+                        <Route path='/add-hotel' element={<AddHotel />} />
+                        <Route path='/edit-hotel/:hotelId' element={<EditHotel />} />
+                    </Route>
+                    <Route element={<PrivateAuthRoute />}>
+                        <Route path='/sign-up' element={<SignUp />} />
+                        <Route path='/sign-in' element={<SignIn />} />
+                    </Route>
                 </Route>
                 <Route path='*' element={<Error />} />
             </Routes>

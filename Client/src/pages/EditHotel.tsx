@@ -52,7 +52,8 @@ const EditHotel = () => {
 
         setLoading(true);
         try {
-            await Axios.put(`/my-hotels/update-hotel/${hotelData?._id}`, formData);
+            const { data } = await Axios.put(`/my-hotels/update-hotel/${hotelData?._id}`, formData);
+            setValue('imageUrls', data.data.imageUrls);
             setLoading(false);
             showToast({ message: 'Hotel Saved!', type: 'SUCCESS' });
         } catch (error) {
