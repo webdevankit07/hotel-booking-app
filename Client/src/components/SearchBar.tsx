@@ -21,6 +21,14 @@ const SearchBar = () => {
         navigate('/search');
     };
 
+    const clearSearch = () => {
+        setDestination('');
+        setCheckIn(new Date());
+        setCheckOut(new Date());
+        setAdultCount(1);
+        setChildCount(0);
+    };
+
     const minDate = new Date();
     const maxDate = new Date();
     maxDate.setFullYear(maxDate.getFullYear() + 1);
@@ -92,11 +100,14 @@ const SearchBar = () => {
                         wrapperClassName='min-w-full'
                     />
                 </div>
-                <div className='flex col-span-2 gap-1 2xl:col-span-1'>
+                <div className='flex col-span-2 gap-4 2xl:gap-1 2xl:col-span-1'>
                     <button className='flex-1 h-full p-2 text-xl font-bold text-white bg-blue-600 rounded-md hover:bg-blue-500'>
                         Search
                     </button>
-                    <button className='flex-1 h-full p-2 text-xl font-bold text-white bg-red-600 rounded-md hover:bg-red-500'>
+                    <button
+                        className='flex-1 h-full p-2 text-xl font-bold text-white bg-red-600 rounded-md hover:bg-red-500'
+                        onClick={clearSearch}
+                    >
                         Clear
                     </button>
                 </div>

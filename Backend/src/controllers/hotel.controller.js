@@ -3,14 +3,30 @@ import uploadOnCloudinary from '../services/cloudinary.js';
 import ApiResponse from '../utils/ApiResponse.js';
 import asyncHandler from '../utils/asyncHandler.js';
 import customError from '../utils/customErrorHandler.js';
+import { constructSearchQuery } from '../utils/utils.js';
 
 export const getHotels = asyncHandler(async (req, res, next) => {
+    const query = await constructSearchQuery(req.query);
+
+    let sortOptions = {};
+    switch (req.query.sortOption) {
+        case 'starRating':
+            sortOptions = { starRating: -1 };
+            break;
+        case 'pricePerNightAsc':
+            sortOptions = { pricePerNight: 1 };
+            break;
+        case 'pricePerNightDesc':
+            sortOptions = { pricePerNight: -1 };
+            break;
+    }
+
     const limit = 5;
     const pageNumber = parseInt(req.query.page ? req.query.page.toString() : '1');
     const skip = (pageNumber - 1) * limit;
 
-    const hotels = await Hotel.find().skip(skip).limit(limit);
-    const total = await Hotel.countDocuments();
+    const hotels = await Hotel.find(query).sort(sortOptions).skip(skip).limit(limit);
+    const total = await Hotel.countDocuments(query);
 
     res.status(200).json(
         new ApiResponse(

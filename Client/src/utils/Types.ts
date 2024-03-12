@@ -88,10 +88,31 @@ export type ResHotelType = {
     pricePerNight: number;
     starRating: number;
     imageFiles: FileList;
+    imageUrls: string[];
+};
+//!
+//!
+//!
+//! ********************   Search Hotel Types ********************* //
+export type HotelSearchResponse = {
+    data: ResHotelType[];
+    pagination: { total: number; pageNo: number; pages: number };
 };
 
-//! ********************   Search Hotel Types ********************* //
-export type SearchHotelType = {
-    data: HotelType[];
-    pagination: { total: number; pageNo: number; pages: number };
+//!
+//!
+//!
+//! ********************   Search Types ********************* //
+export type SearchParamsTypes = {
+    destination?: string;
+    checkIn?: string;
+    checkOut?: string;
+    adultCount?: string;
+    childCount?: string;
+    page?: string;
+    facilities?: string[];
+    types?: string[];
+    stars?: string[];
+    maxPrice?: string;
+    sortOption?: string;
 };

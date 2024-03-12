@@ -1,5 +1,12 @@
 import axios from 'axios';
-import { ResHotelType, SignUpFormData, SigninFormData, ValidationError } from '../utils/Types';
+import {
+    HotelSearchResponse,
+    ResHotelType,
+    SearchParamsTypes,
+    SignUpFormData,
+    SigninFormData,
+    ValidationError,
+} from '../utils/Types';
 import { apiBaseUrl } from '../conf';
 
 // Axios...
@@ -80,6 +87,33 @@ export const getMyHotelDetails = async (hotelId: string) => {
     try {
         const { data } = await Axios.get(`/my-hotels/${hotelId}`);
         return data.data as ResHotelType;
+    } catch (error) {
+        const err = await handleAxiosError(error);
+        throw new Error(err);
+    }
+};
+
+// Search-Hotel-Details...*:
+export const searchHotels = async (searchParams: SearchParamsTypes): Promise<HotelSearchResponse> => {
+    const queryParams = new URLSearchParams();
+    queryParams.append('destination', searchParams.destination || '');
+    queryParams.append('checkIn', searchParams.checkIn || '');
+    queryParams.append('checkOut', searchParams.checkOut || '');
+    queryParams.append('adultCount', searchParams.adultCount || '');
+    queryParams.append('childCount', searchParams.childCount || '');
+    queryParams.append('page', searchParams.page || '');
+
+    queryParams.append('maxPrice', searchParams.maxPrice || '');
+    queryParams.append('sortOption', searchParams.sortOption || '');
+
+    searchParams.facilities?.forEach((facility) => queryParams.append('facilities', facility));
+
+    searchParams.types?.forEach((type) => queryParams.append('types', type));
+    searchParams.stars?.forEach((star) => queryParams.append('stars', star));
+
+    try {
+        const { data: searchData } = await Axios.get(`/my-hotels/search?${queryParams}`);
+        return searchData.data;
     } catch (error) {
         const err = await handleAxiosError(error);
         throw new Error(err);
