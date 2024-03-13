@@ -17,6 +17,7 @@ import EditHotel from './pages/EditHotel';
 import Search from './pages/Search';
 import PrivateRoute from './privateRoutes/PrivateRoute';
 import PrivateAuthRoute from './privateRoutes/PrivateAuthRoute';
+import HotelDetails from './pages/HotelDetails';
 
 const App = () => {
     return (
@@ -26,6 +27,7 @@ const App = () => {
                 <Route element={<MainLayout />}>
                     <Route path='/' element={<Home />} />
                     <Route path='/search' element={<Search />} />
+                    <Route path='/detail/:hotelId' element={<HotelDetails />} />
                 </Route>
                 <Route element={<Layout />}>
                     <Route element={<PrivateRoute />}>

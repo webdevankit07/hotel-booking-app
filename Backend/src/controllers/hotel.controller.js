@@ -64,6 +64,17 @@ export const myHotels = asyncHandler(async (req, res, next) => {
     res.status(200).json(new ApiResponse(200, hotels, 'Hotel fetched successfully'));
 });
 
+export const getHotelDetail = asyncHandler(async (req, res, next) => {
+    const { id } = req.params;
+
+    const hotel = await Hotel.findById(id);
+    if (!hotel) {
+        return next(new customError(400, 'Error fetching hotel details'));
+    }
+
+    res.status(200).json(new ApiResponse(200, hotel, 'Hotel details fetched.'));
+});
+
 export const myHotelDetail = asyncHandler(async (req, res, next) => {
     const { id } = req.params;
 

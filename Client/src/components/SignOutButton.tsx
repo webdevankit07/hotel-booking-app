@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import { useAppContext } from '../contexts/AppContext';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { userLogout } from '../api/apiClient';
@@ -6,7 +5,6 @@ import { userLogout } from '../api/apiClient';
 const SignOutButton = () => {
     const queryClient = useQueryClient();
     const { showToast } = useAppContext();
-    const navigate = useNavigate();
 
     //logout user..
     const mutation = useMutation({
@@ -14,7 +12,6 @@ const SignOutButton = () => {
         onSuccess: async () => {
             await queryClient.invalidateQueries({ queryKey: ['validateToken'] });
             showToast({ message: 'user logged out', type: 'SUCCESS' });
-            navigate('/');
         },
         onError: (err: Error) => showToast({ message: err.message, type: 'ERROR' }),
     });

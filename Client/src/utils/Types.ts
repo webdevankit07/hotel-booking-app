@@ -98,7 +98,6 @@ export type HotelSearchResponse = {
     data: ResHotelType[];
     pagination: { total: number; pageNo: number; pages: number };
 };
-
 //!
 //!
 //!
@@ -115,4 +114,14 @@ export type SearchParamsTypes = {
     stars?: string[];
     maxPrice?: string;
     sortOption?: string;
+};
+//!
+//!
+//!
+//! ********************   GuestInpurForm Types ********************* //
+export type GuestInfoFormData = {
+    checkIn: Date;
+    checkOut: Date;
+    adultCount: number;
+    childCount: number;
 };

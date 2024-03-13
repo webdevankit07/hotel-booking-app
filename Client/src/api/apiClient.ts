@@ -119,3 +119,14 @@ export const searchHotels = async (searchParams: SearchParamsTypes): Promise<Hot
         throw new Error(err);
     }
 };
+
+// fetchHotelById...*:
+export const fetchHotelById = async (hotelId: string) => {
+    try {
+        const { data } = await Axios.get(`/my-hotels/hotel/${hotelId}`);
+        return data.data as ResHotelType;
+    } catch (error) {
+        const err = await handleAxiosError(error);
+        throw new Error(err);
+    }
+};

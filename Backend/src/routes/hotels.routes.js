@@ -1,5 +1,12 @@
 import { Router } from 'express';
-import { addNewHotel, getHotels, myHotelDetail, myHotels, updateHotel } from '../controllers/hotel.controller.js';
+import {
+    addNewHotel,
+    getHotelDetail,
+    getHotels,
+    myHotelDetail,
+    myHotels,
+    updateHotel,
+} from '../controllers/hotel.controller.js';
 import { upload } from '../middlewares/multer.middleware.js';
 import verifyToken from '../middlewares/auth.middleware.js';
 import validate from '../middlewares/validator.middleware.js';
@@ -8,6 +15,7 @@ const router = Router();
 
 //Public routes..*:
 router.route('/search').get(getHotels);
+router.route('/hotel/:id').get(getHotelDetail);
 
 // Private Routes....*:
 router.route('/').get(verifyToken, myHotels);
