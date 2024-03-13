@@ -37,15 +37,41 @@ const Search = () => {
         queryFn: () => searchHotels(searchParams),
     });
 
+    const handleStarsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const starRating = e.target.value;
+
+        setSelectedStars((prevStars) =>
+            e.target.checked ? [...prevStars, starRating] : prevStars.filter((star) => star !== starRating)
+        );
+    };
+
+    const handleHotelTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const hotelType = e.target.value;
+
+        setSelectedHotelTypes((prevHotelTypes) =>
+            e.target.checked ? [...prevHotelTypes, hotelType] : prevHotelTypes.filter((hotel) => hotel !== hotelType)
+        );
+    };
+
+    const handleFacilityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const facility = e.target.value;
+
+        setSelectedFacilities((prevFacilites) =>
+            e.target.checked
+                ? [...prevFacilites, facility]
+                : prevFacilites.filter((prevfacility) => prevfacility !== facility)
+        );
+    };
+
     return (
         <div className='grid grid-cols-1 lg:grid-cols-[250px_1fr] gap-5'>
-            <div className='sticky p-5 border rounded-lg border-slate-300 h-fit top-10'>
+            <div className='sticky p-5 mb-5 border rounded-lg border-slate-300 h-fit top-10'>
                 <div className='space-y-5'>
                     <h3 className='pb-5 text-lg font-semibold border-b border-slate-300'>Filter by:</h3>
-                    {/* <StarRatingFilter selectedStars={selectedStars} onChange={handleStarsChange} /> */}
-                    {/* <HotelTypesFilter selectedHotelTypes={selectedHotelTypes} onChange={handleHotelTypeChange} /> */}
-                    {/* <FacilitiesFilter selectedFacilities={selectedFacilities} onChange={handleFacilityChange} /> */}
-                    {/* <PriceFilter selectedPrice={selectedPrice} onChange={(value?: number) => setSelectedPrice(value)} /> */}
+                    <StarRatingFilter selectedStars={selectedStars} onChange={handleStarsChange} />
+                    <HotelTypesFilter selectedHotelTypes={selectedHotelTypes} onChange={handleHotelTypeChange} />
+                    <FacilitiesFilter selectedFacilities={selectedFacilities} onChange={handleFacilityChange} />
+                    <PriceFilter selectedPrice={selectedPrice} onChange={(value?: number) => setSelectedPrice(value)} />
                 </div>
             </div>
             <div className='flex flex-col gap-5'>
