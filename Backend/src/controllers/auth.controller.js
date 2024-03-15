@@ -85,6 +85,10 @@ export const validateToken = asyncHandler(async (req, res) => {
     res.status(200).json(new ApiResponse(200, { userId: req.user._id }, 'user valid'));
 });
 
+export const getUserDetails = asyncHandler(async (req, res) => {
+    res.status(200).json(new ApiResponse(200, { user: req.user }, 'success'));
+});
+
 export const logoutUser = asyncHandler(async (req, res) => {
     await User.findByIdAndUpdate(req.user._id, { $unset: { refreshToken: 1 } });
 

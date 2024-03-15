@@ -1,3 +1,5 @@
+import { Stripe } from '@stripe/stripe-js';
+
 //! ********************  apiClient Types ********************* //
 export type ValidationError = {
     message: string;
@@ -15,6 +17,7 @@ export type ToastMessageType = {
 export type AppContextType = {
     showToast: (toastMassege: ToastMessageType) => void;
     isLoggedIn: boolean;
+    stripePromise: Promise<Stripe | null>;
 };
 //!
 //!
@@ -89,6 +92,9 @@ export type ResHotelType = {
     starRating: number;
     imageFiles: FileList;
     imageUrls: string[];
+    bookings: BookingType;
+    createdAt: Date;
+    updatedAt: Date;
 };
 //!
 //!
@@ -124,4 +130,50 @@ export type GuestInfoFormData = {
     checkOut: Date;
     adultCount: number;
     childCount: number;
+};
+//!
+//!
+//!
+//! ********************   GuestInpurForm Types ********************* //
+export type currentUserType = {
+    _id: string;
+    fullName: string;
+    userName: string;
+    email: string;
+    createdAt: string;
+    updatedAt: string;
+    __v: number;
+};
+//!
+//!
+//!
+//! ********************   Booking Form Types ********************* //
+export type BookingFormData = {
+    fullName: string;
+    email: string;
+    adultCount: number;
+    childCount: number;
+    checkIn: string;
+    checkOut: string;
+    hotelId: string;
+    paymentIntentId: string;
+    totalCost: number;
+};
+
+export type BookingType = {
+    _id: string;
+    userId: string;
+    fullName: string;
+    email: string;
+    adultCount: number;
+    childCount: number;
+    checkIn: string;
+    checkOut: string;
+    totalCost: number;
+};
+
+export type PaymentIntentResponse = {
+    paymentIntentId: string;
+    clientSecret: string;
+    totalCost: number;
 };

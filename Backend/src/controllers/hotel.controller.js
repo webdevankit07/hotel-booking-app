@@ -4,6 +4,10 @@ import ApiResponse from '../utils/ApiResponse.js';
 import asyncHandler from '../utils/asyncHandler.js';
 import customError from '../utils/customErrorHandler.js';
 import { constructSearchQuery } from '../utils/utils.js';
+import Stripe from 'stripe';
+import { STRIPE_API_KEY } from '../conf/index.js';
+
+const stripe = new Stripe(STRIPE_API_KEY);
 
 export const getHotels = asyncHandler(async (req, res, next) => {
     const query = await constructSearchQuery(req.query);
@@ -109,4 +113,71 @@ export const updateHotel = asyncHandler(async (req, res, next) => {
     }
 
     res.status(201).json(new ApiResponse(201, hotel, 'Hotel updated'));
+});
+
+export const bookingPaymentIntent = asyncHandler(async (req, res, next) => {
+    const { numberOfNights } = req.body;
+    const { hotelId } = req.params;
+    const hotel = await Hotel.findById(hotelId);
+    if (!hotel) {
+        return next(new customError(400, 'Hotel not found'));
+    }
+
+    const totalCost = hotel.pricePerNight * parseInt(numberOfNights);
+    const paymentIntent = await stripe.paymentIntents.create({
+        amount: totalCost * 100,
+        currency: 'INR',
+        description: 'for hotel-booking project',
+        shipping: {
+            name: 'Random singh',
+            address: {
+                line1: '510 Townsend St',
+                postal_code: '98140',
+                city: 'San Francisco',
+                state: 'CA',
+                country: 'US',
+            },
+        },
+        metadata: {
+            hotelId,
+            userId: req.user.id,
+        },
+    });
+
+    if (!paymentIntent.client_secret) {
+        return next(new customError(500, 'Error creating payment intent'));
+    }
+
+    res.status(200).json(
+        new ApiResponse(200, {
+            paymentIntentId: paymentIntent.id,
+            clientSecret: paymentIntent.client_secret.toString(),
+            totalCost,
+        })
+    );
+});
+
+export const bookings = asyncHandler(async (req, res, next) => {
+    const { paymentIntentId } = req.body;
+    const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
+
+    if (!paymentIntent) {
+        return next(new customError(400, 'payment intent not found'));
+    }
+
+    if (paymentIntent.metadata.hotelId !== req.params.hotelId || paymentIntent.metadata.userId !== req.user.id) {
+        return next(new customError(400, 'payment intent mismatch'));
+    }
+
+    if (paymentIntent.status !== 'succeeded') {
+        return next(new customError(400, `payment intent not succeeded. Status: ${paymentIntent.status}`));
+    }
+
+    const newBooking = { ...req.body, userId: req.user.id };
+    const hotel = await Hotel.findOneAndUpdate({ _id: req.params.hotelId }, { $push: { bookings: newBooking } });
+    if (!hotel) {
+        return next(new customError(400, 'hotel not found'));
+    }
+
+    res.status(200).json(new ApiResponse(200, { hotelId: hotel._id }));
 });

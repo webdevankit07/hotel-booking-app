@@ -1,11 +1,14 @@
 import axios from 'axios';
 import {
+    BookingFormData,
     HotelSearchResponse,
+    PaymentIntentResponse,
     ResHotelType,
     SearchParamsTypes,
     SignUpFormData,
     SigninFormData,
     ValidationError,
+    currentUserType,
 } from '../utils/Types';
 import { apiBaseUrl } from '../conf';
 
@@ -125,6 +128,38 @@ export const fetchHotelById = async (hotelId: string) => {
     try {
         const { data } = await Axios.get(`/my-hotels/hotel/${hotelId}`);
         return data.data as ResHotelType;
+    } catch (error) {
+        const err = await handleAxiosError(error);
+        throw new Error(err);
+    }
+};
+
+// fetchHotelById...*:
+export const getCurrentUser = async () => {
+    try {
+        const { data } = await Axios.get(`/user/me`);
+        return data.data.user as currentUserType;
+    } catch (error) {
+        const err = await handleAxiosError(error);
+        throw new Error(err);
+    }
+};
+
+// create payment Intent...*:
+export const createPaymentIntent = async (hotelId: string, numberOfNights: string) => {
+    try {
+        const { data } = await Axios.post(`/my-hotels/${hotelId}/bookings/payment-intent`, { numberOfNights });
+        return data.data as PaymentIntentResponse;
+    } catch (error) {
+        const err = await handleAxiosError(error);
+        throw new Error(err);
+    }
+};
+
+export const createRoomBooking = async (formData: BookingFormData) => {
+    try {
+        const { data } = await Axios.post(`/my-hotels/${formData.hotelId}/bookings`, formData);
+        return data.data as PaymentIntentResponse;
     } catch (error) {
         const err = await handleAxiosError(error);
         throw new Error(err);

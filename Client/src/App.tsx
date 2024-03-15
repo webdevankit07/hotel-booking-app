@@ -18,6 +18,7 @@ import Search from './pages/Search';
 import PrivateRoute from './privateRoutes/PrivateRoute';
 import PrivateAuthRoute from './privateRoutes/PrivateAuthRoute';
 import HotelDetails from './pages/HotelDetails';
+import Booking from './pages/Booking';
 
 const App = () => {
     return (
@@ -35,6 +36,7 @@ const App = () => {
                         <Route path='/my-hotels' element={<MyHotels />} />
                         <Route path='/add-hotel' element={<AddHotel />} />
                         <Route path='/edit-hotel/:hotelId' element={<EditHotel />} />
+                        <Route path='/hotel/:hotelId/booking' element={<Booking />} />
                     </Route>
                     <Route element={<PrivateAuthRoute />}>
                         <Route path='/sign-up' element={<SignUp />} />

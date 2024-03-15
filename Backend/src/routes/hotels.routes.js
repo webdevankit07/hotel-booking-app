@@ -1,6 +1,8 @@
 import { Router } from 'express';
 import {
     addNewHotel,
+    bookingPaymentIntent,
+    bookings,
     getHotelDetail,
     getHotels,
     myHotelDetail,
@@ -11,6 +13,7 @@ import { upload } from '../middlewares/multer.middleware.js';
 import verifyToken from '../middlewares/auth.middleware.js';
 import validate from '../middlewares/validator.middleware.js';
 import { hotelSChema } from '../validators/hotel.validator.js';
+
 const router = Router();
 
 //Public routes..*:
@@ -26,5 +29,7 @@ router
 router
     .route('/update-hotel/:id')
     .put(verifyToken, upload.fields([{ name: 'imageFiles', maxCount: 6 }]), validate(hotelSChema), updateHotel);
+router.route('/:hotelId/bookings/payment-intent').post(verifyToken, bookingPaymentIntent);
+router.route('/:hotelId/bookings').post(verifyToken, bookings);
 
 export { router as hotelRoutes };
