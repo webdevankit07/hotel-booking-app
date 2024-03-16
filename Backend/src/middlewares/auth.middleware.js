@@ -1,3 +1,4 @@
+import { ACCESS_TOKEN_SECRET } from '../conf/index.js';
 import User from '../models/user.model.js';
 import customError from '../utils/customErrorHandler.js';
 import jwt from 'jsonwebtoken';
@@ -9,7 +10,7 @@ const verifyToken = async (req, _, next) => {
     }
 
     try {
-        const decodeToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+        const decodeToken = jwt.verify(token, ACCESS_TOKEN_SECRET);
         if (!decodeToken) {
             return next(new customError(401, 'unauthorized'));
         }
