@@ -35,6 +35,8 @@ const Booking = () => {
 
     const { data: currentUser } = useQuery({ queryKey: ['currentUser'], queryFn: getCurrentUser });
 
+    console.log({ currentUser, paymentIntentData });
+
     return (
         <div className='grid md:grid-cols-[1fr_2fr] my-10 gap-5'>
             <BookingDetailsSummary

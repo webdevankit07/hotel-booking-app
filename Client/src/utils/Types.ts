@@ -90,7 +90,6 @@ export type ResHotelType = {
     facilities: string[];
     pricePerNight: number;
     starRating: number;
-    imageFiles: FileList;
     imageUrls: string[];
     bookings: BookingType;
     createdAt: Date;

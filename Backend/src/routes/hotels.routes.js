@@ -3,6 +3,7 @@ import {
     addNewHotel,
     bookingPaymentIntent,
     bookings,
+    getAllHotels,
     getHotelDetail,
     getHotels,
     myHotelDetail,
@@ -19,6 +20,7 @@ const router = Router();
 //Public routes..*:
 router.route('/search').get(getHotels);
 router.route('/hotel/:id').get(getHotelDetail);
+router.route('/getAllHotels').get(getAllHotels);
 
 // Private Routes....*:
 router.route('/').get(verifyToken, myHotels);

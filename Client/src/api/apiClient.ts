@@ -165,3 +165,13 @@ export const createRoomBooking = async (formData: BookingFormData) => {
         throw new Error(err);
     }
 };
+
+export const getAllHotels = async () => {
+    try {
+        const { data } = await Axios.get(`/my-hotels/getAllHotels`);
+        return data.data as ResHotelType[];
+    } catch (error) {
+        const err = await handleAxiosError(error);
+        throw new Error(err);
+    }
+};
