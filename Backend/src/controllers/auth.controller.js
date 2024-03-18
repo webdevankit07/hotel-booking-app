@@ -1,3 +1,4 @@
+import { NODE_ENV } from '../conf/index.js';
 import User from '../models/user.model.js';
 import ApiResponse from '../utils/ApiResponse.js';
 import asyncHandler from '../utils/asyncHandler.js';
@@ -22,13 +23,13 @@ const generateAccessAndRefreshToken = async (userId) => {
 
 const accessTokenOptions = {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
+    secure: NODE_ENV === 'production',
     maxAge: 1000 * 60 * 60 * 24, // 1 days
 };
 
 const refreshTokenOptions = {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
+    secure: NODE_ENV === 'production',
     maxAge: 1000 * 60 * 60 * 24 * 10, // 10 days...
 };
 

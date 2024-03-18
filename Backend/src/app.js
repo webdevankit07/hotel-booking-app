@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser';
 import { hotelRoutes } from './routes/hotels.routes.js';
 import { authRoutes } from './routes/auth.routes.js';
 import { FRONTEND_URL } from './conf/index.js';
+import { myBookingRoutes } from './routes/my-bookings.routes.js';
 
 // import path from 'path';
 // import { fileURLToPath } from 'url';
@@ -39,5 +40,6 @@ app.get('/', (_, res) => {
 
 app.use('/api/v1/user', authRoutes);
 app.use('/api/v1/my-hotels', hotelRoutes);
+app.use('/api/v1/my-bookings', myBookingRoutes);
 
 export default app;

@@ -10,7 +10,7 @@ const MainLayout = () => {
             <Header />
             <Hero />
             <div className='flex-1'>
-                <div className='container mx-auto'>
+                <div className='container mx-auto max-w-7xl'>
                     <div className='mb-10'>
                         <SearchBar />
                     </div>

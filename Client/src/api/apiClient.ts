@@ -175,3 +175,13 @@ export const getAllHotels = async () => {
         throw new Error(err);
     }
 };
+
+export const fetchMyBookings = async () => {
+    try {
+        const { data } = await Axios.get(`/my-bookings`);
+        return data.data as ResHotelType[];
+    } catch (error) {
+        const err = await handleAxiosError(error);
+        throw new Error(err);
+    }
+};

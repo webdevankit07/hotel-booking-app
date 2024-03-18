@@ -4,11 +4,7 @@ export default {
     theme: {
         extend: {},
         container: {
-            padding: {
-                sm: '2rem',
-                lg: '5rem',
-                xl: '10rem',
-            },
+            padding: {},
         },
     },
     plugins: [],

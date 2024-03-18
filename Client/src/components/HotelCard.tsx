@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const HotelCard = ({ hotel }: { hotel: ResHotelType }) => {
     return (
-        <div className='w-full md:max-w-[320px] lg:max-w-[350px] p-2 overflow-hidden bg-white border-2 rounded-lg shadow-lg'>
+        <div className='w-full p-2 overflow-hidden transition-all duration-500 ease-in-out bg-white border-2 rounded-lg shadow-lg hover:scale-105'>
             <Link to={`detail/${hotel._id}`}>
                 <img
                     className='object-cover w-full h-56'

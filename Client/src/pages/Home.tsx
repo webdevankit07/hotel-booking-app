@@ -7,7 +7,7 @@ const Home = () => {
     return (
         <div className='px-1'>
             <h1 className='text-2xl font-bold text-center underline '>Top Hotels</h1>
-            <div className='flex flex-wrap items-center justify-center gap-2 my-10 sm:gap-3 md:gap-4 lg:gap-6'>
+            <div className='grid grid-cols-1 gap-2 px-2 my-10 md:grid-cols-2 lg:grid-cols-3 sm:gap-3 md:gap-4'>
                 {hotels && hotels.map((hotel) => <HotelCard hotel={hotel} key={hotel._id} />)}
             </div>
         </div>

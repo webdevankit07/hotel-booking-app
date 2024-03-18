@@ -91,7 +91,7 @@ export type ResHotelType = {
     pricePerNight: number;
     starRating: number;
     imageUrls: string[];
-    bookings: BookingType;
+    bookings: BookingType[];
     createdAt: Date;
     updatedAt: Date;
 };
