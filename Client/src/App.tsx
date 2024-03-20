@@ -19,6 +19,7 @@ import PrivateRoute from './privateRoutes/PrivateRoute';
 import PrivateAuthRoute from './privateRoutes/PrivateAuthRoute';
 import HotelDetails from './pages/HotelDetails';
 import Booking from './pages/Booking';
+import AuthLayout from './layouts/AuthLayout';
 
 const App = () => {
     return (
@@ -27,10 +28,10 @@ const App = () => {
             <Routes>
                 <Route element={<MainLayout />}>
                     <Route path='/' element={<Home />} />
-                    <Route path='/search' element={<Search />} />
-                    <Route path='/detail/:hotelId' element={<HotelDetails />} />
                 </Route>
                 <Route element={<Layout />}>
+                    <Route path='/search' element={<Search />} />
+                    <Route path='/detail/:hotelId' element={<HotelDetails />} />
                     <Route element={<PrivateRoute />}>
                         <Route path='/my-bookings' element={<MyBookings />} />
                         <Route path='/my-hotels' element={<MyHotels />} />
@@ -38,6 +39,8 @@ const App = () => {
                         <Route path='/edit-hotel/:hotelId' element={<EditHotel />} />
                         <Route path='/hotel/:hotelId/booking' element={<Booking />} />
                     </Route>
+                </Route>
+                <Route element={<AuthLayout />}>
                     <Route element={<PrivateAuthRoute />}>
                         <Route path='/sign-up' element={<SignUp />} />
                         <Route path='/sign-in' element={<SignIn />} />

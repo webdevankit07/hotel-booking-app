@@ -4,6 +4,7 @@ import { useAppContext } from '../contexts/AppContext';
 import { UseSearchContext } from '../contexts/SearchContext';
 import { useLocation, useNavigate } from 'react-router-dom';
 import ReactDatePicker from 'react-datepicker';
+import { Button } from './ui/button';
 
 type Props = {
     hotelId: string;
@@ -11,7 +12,7 @@ type Props = {
 };
 
 const GuestInfoForm = ({ hotelId, pricePerNight }: Props) => {
-    const { isLoggedIn } = useAppContext();
+    const { isLoggedIn, showToast } = useAppContext();
     const search = UseSearchContext();
     const navigate = useNavigate();
     const location = useLocation();
@@ -45,11 +46,17 @@ const GuestInfoForm = ({ hotelId, pricePerNight }: Props) => {
 
     const onSubmit = (data: GuestInfoFormData) => {
         search.saveSearchValues('', data.checkIn, data.checkOut, data.adultCount, data.childCount);
-        navigate(`/hotel/${hotelId}/booking`);
+        const nights = Math.abs(search.checkOut.getTime() - search.checkIn.getTime()) / (1000 * 60 * 60 * 24);
+        if (nights > 0) {
+            console.log(nights);
+            navigate(`/hotel/${hotelId}/booking`);
+        } else {
+            showToast({ message: 'Select Booking date', type: 'ERROR' });
+        }
     };
 
     return (
-        <div className='flex flex-col gap-4 p-4 bg-blue-200'>
+        <div className='flex flex-col gap-4 p-4 text-gray-300 bg-gray-900 rounded'>
             <h3 className='font-bold text-md'>₹{pricePerNight}</h3>
             <form onSubmit={isLoggedIn ? handleSubmit(onSubmit) : handleSubmit(onSignInClick)}>
                 <div className='grid items-center grid-cols-1 gap-4'>
@@ -64,7 +71,7 @@ const GuestInfoForm = ({ hotelId, pricePerNight }: Props) => {
                             minDate={minDate}
                             maxDate={maxDate}
                             placeholderText='Check-in Date'
-                            className='min-w-full p-2 bg-white focus:outline-none'
+                            className='min-w-full p-2 text-gray-300 focus:outline-none bg-slate-950'
                             wrapperClassName='min-w-full'
                         />
                     </div>
@@ -79,15 +86,15 @@ const GuestInfoForm = ({ hotelId, pricePerNight }: Props) => {
                             minDate={minDate}
                             maxDate={maxDate}
                             placeholderText='Check-in Date'
-                            className='min-w-full p-2 bg-white focus:outline-none'
+                            className='min-w-full p-2 text-gray-300 bg-slate-950 focus:outline-none'
                             wrapperClassName='min-w-full'
                         />
                     </div>
-                    <div className='flex gap-2 px-2 py-1 bg-white'>
+                    <div className='flex gap-2 px-2 py-1 text-gray-300 bg-slate-950'>
                         <label className='flex items-center'>
                             Adults:
                             <input
-                                className='w-full p-1 font-bold focus:outline-none'
+                                className='w-full p-1 font-bold border-none bg-slate-950 focus:outline-none'
                                 type='number'
                                 min={1}
                                 max={20}
@@ -104,7 +111,7 @@ const GuestInfoForm = ({ hotelId, pricePerNight }: Props) => {
                         <label className='flex items-center'>
                             Children:
                             <input
-                                className='w-full p-1 font-bold focus:outline-none'
+                                className='w-full p-1 font-bold border-none bg-slate-950 focus:outline-none'
                                 type='number'
                                 min={0}
                                 max={20}
@@ -117,15 +124,7 @@ const GuestInfoForm = ({ hotelId, pricePerNight }: Props) => {
                             <span className='text-sm font-semibold text-red-500'>{errors.adultCount.message}</span>
                         )}
                     </div>
-                    {isLoggedIn ? (
-                        <button className='h-full p-2 text-xl font-bold text-white bg-blue-600 hover:bg-blue-500'>
-                            Book Now
-                        </button>
-                    ) : (
-                        <button className='h-full p-2 text-xl font-bold text-white bg-blue-600 hover:bg-blue-500'>
-                            Sign in to Book
-                        </button>
-                    )}
+                    {isLoggedIn ? <Button variant={'destructive'}>Book Now</Button> : <Button>Sign in to Book</Button>}
                 </div>
             </form>
         </div>

@@ -1,49 +1,48 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useAppContext } from '../contexts/AppContext';
 import SignOutButton from './SignOutButton';
+import { Button } from './ui/button';
+import { Navbar } from 'flowbite-react';
 
 const Header = () => {
     const { isLoggedIn } = useAppContext();
+    const path = useLocation().pathname;
 
     return (
-        <div className='py-6 bg-blue-800'>
-            <div className='container mx-auto'>
-                <div className='flex justify-between px-4 md:px-0'>
-                    <span className='text-3xl font-bold tracking-tight text-white'>
-                        <Link to={'/'}>Holidays.com</Link>
-                    </span>
-                    <span className='flex space-x-2'>
-                        {!isLoggedIn ? (
-                            <>
-                                <Link
-                                    to={'/sign-in'}
-                                    className='flex items-center px-3 font-bold text-blue-600 transition-all duration-100 ease-in-out bg-white rounded-md hover:bg-gray-200'
-                                >
-                                    Sign In
+        <div className='sticky z-50 mx-2 top-3 sm:top-5'>
+            <Navbar fluid rounded className='container py-5 border-[1px] bg-gradient-to-tl from-slate-950 to-blue-950'>
+                <Navbar.Brand as={'div'} className='text-xl font-bold tracking-tight text-white'>
+                    <Link to={'/'}>Travel Nest</Link>
+                </Navbar.Brand>
+                <span className='hidden space-x-2 md:flex '>
+                    {!isLoggedIn ? (
+                        <Link to={'/sign-in'}>
+                            <Button variant='secondary'>Sign In</Button>
+                        </Link>
+                    ) : (
+                        <>
+                            <div className='flex gap-3 mr-5'>
+                                <Link to={'/my-bookings'}>
+                                    <Button variant='secondary'>My Bookings</Button>
                                 </Link>
-                            </>
-                        ) : (
-                            <>
-                                <div className='flex gap-3 mr-5'>
-                                    <Link
-                                        to={'/my-bookings'}
-                                        className='flex items-center px-3 font-bold text-blue-600 transition-all duration-100 ease-in-out bg-white rounded-md hover:bg-gray-200'
-                                    >
-                                        My Bookings
-                                    </Link>
-                                    <Link
-                                        to={'/my-hotels'}
-                                        className='flex items-center px-3 font-bold text-blue-600 transition-all duration-100 ease-in-out bg-white rounded-md hover:bg-gray-200'
-                                    >
-                                        My Hotels
-                                    </Link>
-                                </div>
+                                <Link to={'/my-hotels'}>
+                                    <Button variant='secondary'>My Hotels</Button>
+                                </Link>
                                 <SignOutButton />
-                            </>
-                        )}
-                    </span>
-                </div>
-            </div>
+                            </div>
+                        </>
+                    )}
+                </span>
+                <Navbar.Toggle />
+                <Navbar.Collapse className='md:hidden'>
+                    <Navbar.Link as={'div'} active={path === '/my-bookings'}>
+                        <Link to={'/my-bookings'}>My Bookings</Link>
+                    </Navbar.Link>
+                    <Navbar.Link as={'div'} active={path === '/my-hotels'}>
+                        <Link to={'/my-hotels'}>My Hotels</Link>
+                    </Navbar.Link>
+                </Navbar.Collapse>
+            </Navbar>
         </div>
     );
 };

@@ -8,6 +8,7 @@ import StarRatingFilter from '../components/StarRatingFilter';
 import HotelTypesFilter from '../components/HotelTypesFilter';
 import FacilitiesFilter from '../components/FacilitiesFilter';
 import PriceFilter from '../components/PriceFilter';
+import SearchBar from '../components/SearchBar';
 
 const Search = () => {
     const search = UseSearchContext();
@@ -64,42 +65,48 @@ const Search = () => {
     };
 
     return (
-        <div className='grid grid-cols-1 lg:grid-cols-[250px_1fr] gap-5'>
-            <div className='sticky p-5 mb-5 border rounded-lg border-slate-300 h-fit top-10'>
-                <div className='space-y-5'>
-                    <h3 className='pb-5 text-lg font-semibold border-b border-slate-300'>Filter by:</h3>
-                    <StarRatingFilter selectedStars={selectedStars} onChange={handleStarsChange} />
-                    <HotelTypesFilter selectedHotelTypes={selectedHotelTypes} onChange={handleHotelTypeChange} />
-                    <FacilitiesFilter selectedFacilities={selectedFacilities} onChange={handleFacilityChange} />
-                    <PriceFilter selectedPrice={selectedPrice} onChange={(value?: number) => setSelectedPrice(value)} />
+        <div className='mt-20'>
+            <SearchBar />
+            <div className='grid grid-cols-1 lg:grid-cols-[250px_1fr] gap-5 mt-5'>
+                <div className='p-5 mb-5 text-gray-300 border rounded-lg bg-slate-950 lg:sticky border-slate-300 h-fit top-10'>
+                    <div className='space-y-5'>
+                        <h3 className='pb-5 text-lg font-semibold border-b border-slate-300'>Filter by:</h3>
+                        <StarRatingFilter selectedStars={selectedStars} onChange={handleStarsChange} />
+                        <HotelTypesFilter selectedHotelTypes={selectedHotelTypes} onChange={handleHotelTypeChange} />
+                        <FacilitiesFilter selectedFacilities={selectedFacilities} onChange={handleFacilityChange} />
+                        <PriceFilter
+                            selectedPrice={selectedPrice}
+                            onChange={(value?: number) => setSelectedPrice(value)}
+                        />
+                    </div>
                 </div>
-            </div>
-            <div className='flex flex-col gap-5'>
-                <div className='flex items-center justify-between'>
-                    <span className='text-xl font-bold'>
-                        {hotelData?.pagination.total} Hotels found
-                        {search.destination ? ` in ${search.destination}` : ''}
-                    </span>
-                    <select
-                        value={sortOption}
-                        onChange={(event) => setSortOption(event.target.value)}
-                        className='p-2 border rounded-md'
-                    >
-                        <option value=''>Sort By</option>
-                        <option value='starRating'>Star Rating</option>
-                        <option value='pricePerNightAsc'>Price Per Night (low to high)</option>
-                        <option value='pricePerNightDesc'>Price Per Night (high to low)</option>
-                    </select>
-                </div>
-                {hotelData?.data.map((hotel) => (
-                    <SearchResultsCard hotel={hotel} key={hotel._id} />
-                ))}
-                <div className='py-5'>
-                    <Pagination
-                        pageNo={hotelData?.pagination.pageNo || 1}
-                        pages={hotelData?.pagination.pages || 1}
-                        onPageChange={(page) => setPage(page)}
-                    />
+                <div className='flex flex-col gap-5'>
+                    <div className='flex items-center justify-between'>
+                        <span className='text-xl font-bold text-gray-300'>
+                            {hotelData?.pagination.total} Hotels found
+                            {search.destination ? ` in ${search.destination}` : ''}
+                        </span>
+                        <select
+                            value={sortOption}
+                            onChange={(event) => setSortOption(event.target.value)}
+                            className='p-2 text-gray-300 border rounded-md bg-slate-950'
+                        >
+                            <option value=''>Sort By</option>
+                            <option value='starRating'>Star Rating</option>
+                            <option value='pricePerNightAsc'>Price Per Night (low to high)</option>
+                            <option value='pricePerNightDesc'>Price Per Night (high to low)</option>
+                        </select>
+                    </div>
+                    {hotelData?.data.map((hotel) => (
+                        <SearchResultsCard hotel={hotel} key={hotel._id} />
+                    ))}
+                    <div className='py-5'>
+                        <Pagination
+                            pageNo={hotelData?.pagination.pageNo || 1}
+                            pages={hotelData?.pagination.pages || 1}
+                            onPageChange={(page) => setPage(page)}
+                        />
+                    </div>
                 </div>
             </div>
         </div>

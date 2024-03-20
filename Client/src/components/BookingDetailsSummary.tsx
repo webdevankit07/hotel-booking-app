@@ -11,7 +11,7 @@ type Props = {
 
 const BookingDetailsSummary = ({ checkIn, checkOut, adultCount, childCount, numberOfNights, hotel }: Props) => {
     return (
-        <div className='grid gap-4 p-5 border rounded-lg border-slate-300 h-fit'>
+        <div className='grid gap-4 p-5 text-gray-300 border rounded-lg border-slate-300 h-fit bg-slate-950'>
             <h2 className='text-xl font-bold'>Your Booking Details</h2>
             <div className='py-2 border-b'>
                 Location:

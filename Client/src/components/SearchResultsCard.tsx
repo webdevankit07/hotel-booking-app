@@ -1,10 +1,11 @@
 import { AiFillStar } from 'react-icons/ai';
 import { ResHotelType } from '../utils/Types';
 import { Link } from 'react-router-dom';
+import { Button } from './ui/button';
 
 const SearchResultsCard = ({ hotel }: { hotel: ResHotelType }) => {
     return (
-        <div className='grid grid-cols-1 xl:grid-cols-[2fr_3fr] border border-slate-300 rounded-lg p-6   gap-8'>
+        <div className='grid grid-cols-1 xl:grid-cols-[2fr_3fr] border border-slate-300 rounded-lg p-6 bg-slate-950 text-gray-300  gap-8'>
             <div className='w-full h-[300px]'>
                 <img src={hotel.imageUrls[0]} className='object-cover object-center w-full h-full rounded-md' />
             </div>
@@ -30,7 +31,7 @@ const SearchResultsCard = ({ hotel }: { hotel: ResHotelType }) => {
                 <div className='grid items-end grid-cols-2 whitespace-nowrap'>
                     <div className='flex flex-wrap items-center flex-1 gap-1'>
                         {hotel.facilities.slice(0, 3).map((facility, i) => (
-                            <span className='p-2 text-xs font-bold rounded-lg bg-slate-300 whitespace-nowrap' key={i}>
+                            <span className='p-2 text-xs font-bold bg-gray-900 rounded-lg whitespace-nowrap' key={i}>
                                 {facility}
                             </span>
                         ))}
@@ -40,11 +41,10 @@ const SearchResultsCard = ({ hotel }: { hotel: ResHotelType }) => {
                     </div>
                     <div className='flex flex-col items-end gap-1'>
                         <span className='font-bold'>₹{hotel.pricePerNight} per night</span>
-                        <Link
-                            to={`/detail/${hotel._id}`}
-                            className='h-full p-2 text-base font-bold text-white bg-blue-600 rounded-md md:text-xl max-w-fit hover:bg-blue-500'
-                        >
-                            View More
+                        <Link to={`/detail/${hotel._id}`}>
+                            <Button variant={'secondary'} className='text-white bg-blue-600 hover:bg-blue-700'>
+                                View More
+                            </Button>
                         </Link>
                     </div>
                 </div>

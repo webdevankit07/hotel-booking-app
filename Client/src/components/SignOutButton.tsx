@@ -1,6 +1,18 @@
 import { useAppContext } from '../contexts/AppContext';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { userLogout } from '../api/apiClient';
+import { Button } from './ui/button';
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from './ui/alert-dialog';
 
 const SignOutButton = () => {
     const queryClient = useQueryClient();
@@ -18,9 +30,25 @@ const SignOutButton = () => {
     const signOut = async () => mutation.mutate();
 
     return (
-        <button className='px-3 font-bold text-blue-600 bg-white rounded-md hover:bg-gray-100' onClick={signOut}>
-            Sign Out
-        </button>
+        <AlertDialog>
+            <AlertDialogTrigger asChild>
+                <Button variant={'destructive'}>Sign Out</Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent className='text-white bg-slate-950'>
+                <AlertDialogHeader>
+                    <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                    <AlertDialogDescription className='text-gray-400'>
+                        This action cannot be undone. This will logged out your account.
+                    </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                    <AlertDialogCancel className='text-black'>Cancel</AlertDialogCancel>
+                    <AlertDialogAction onClick={signOut} className='text-white bg-red-600'>
+                        Sign Out
+                    </AlertDialogAction>
+                </AlertDialogFooter>
+            </AlertDialogContent>
+        </AlertDialog>
     );
 };
 

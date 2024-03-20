@@ -19,7 +19,7 @@ const Toast = ({ message, type, onClose }: ToastProps) => {
 
     return (
         <div
-            className={`fixed top-4 right-4 z-50 p-4 rounded-md text-white max-w-md ${
+            className={`fixed top-4 z-[99999] right-4 p-4 rounded-md text-white max-w-md ${
                 type === 'SUCCESS' ? 'bg-green-500' : 'bg-red-600'
             }`}
         >

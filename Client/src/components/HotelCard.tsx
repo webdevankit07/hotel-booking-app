@@ -1,41 +1,42 @@
 import { AiFillStar } from 'react-icons/ai';
 import { ResHotelType } from '../utils/Types';
 import { Link } from 'react-router-dom';
+import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from './ui/card';
+import { Button } from './ui/button';
 
 const HotelCard = ({ hotel }: { hotel: ResHotelType }) => {
     return (
-        <div className='w-full p-2 overflow-hidden transition-all duration-500 ease-in-out bg-white border-2 rounded-lg shadow-lg hover:scale-105'>
-            <Link to={`detail/${hotel._id}`}>
-                <img
-                    className='object-cover w-full h-56'
-                    src={hotel.imageUrls[Math.floor(Math.random() * 2)]}
-                    alt='poster'
-                />
-            </Link>
-
-            <div className='py-5 space-y-2'>
-                <div className='flex items-center gap-2 text-xs'>
-                    <Link to={`detail/${hotel._id}`} className='block text-xl font-bold text-gray-800 '>
-                        {hotel.name}
-                    </Link>
-                    <span className='text-gray-600 underline'>{hotel.city}</span>
-                </div>
-                <div className='flex gap-1'>
-                    {Array.from({ length: hotel.starRating }).map(() => (
-                        <AiFillStar className='fill-yellow-400' key={Math.random() * 1000000000000} />
-                    ))}
-                </div>
-                <p className='text-sm text-gray-700 line-clamp-4'>{hotel.description}</p>
-                <div className='flex items-center justify-between'>
-                    <p className='text-base font-bold'>₹{hotel.pricePerNight}</p>
+        <>
+            <Card className='text-white transition-all duration-500 ease-in-out border-gray-600 shadow-lg hover:shadow-2xl bg-slate-900'>
+                <CardHeader className='p-3'>
                     <Link to={`detail/${hotel._id}`}>
-                        <button className='px-3 py-2 font-semibold text-white bg-blue-500 rounded-md'>
-                            View Details
-                        </button>
+                        <img
+                            className='object-cover w-full h-56 rounded-t-md'
+                            src={hotel.imageUrls[Math.floor(Math.random() * 2)]}
+                            alt='poster'
+                        />
                     </Link>
-                </div>
-            </div>
-        </div>
+                    <CardTitle className='pt-2'>
+                        {hotel.name}
+                        <span className='ml-2 text-xs font-medium text-gray-500 underline'>{hotel.city}</span>
+                    </CardTitle>
+                    <div className='flex gap-1'>
+                        {Array.from({ length: hotel.starRating }).map(() => (
+                            <AiFillStar className='fill-yellow-400' key={Math.random() * 1000000000000} />
+                        ))}
+                    </div>
+                    <CardDescription className='text-gray-400 line-clamp-4'>{hotel.description}</CardDescription>
+                </CardHeader>
+                <CardFooter>
+                    <div className='flex items-center justify-between w-full '>
+                        <p className='text-base font-bold'>₹{hotel.pricePerNight}</p>
+                        <Link to={`detail/${hotel._id}`}>
+                            <Button variant={'secondary'}>View Details</Button>
+                        </Link>
+                    </div>
+                </CardFooter>
+            </Card>
+        </>
     );
 };
 
