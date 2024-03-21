@@ -10,7 +10,8 @@ const Header = () => {
 
     return (
         <div className='sticky z-50 mx-2 top-3 sm:top-5'>
-            <Navbar fluid rounded className='container py-5 border-[1px] bg-gradient-to-tl from-slate-950 to-blue-950'>
+            {/* <Navbar fluid rounded className='container py-5 bg-gradient-to-tl from-slate-950 to-blue-950'> */}
+            <Navbar fluid className='container py-5 rounded-xl bg-gradient-to-tl from-slate-950 to-blue-950'>
                 <Navbar.Brand as={'div'} className='text-xl font-bold tracking-tight text-white'>
                     <Link to={'/'}>Travel Nest</Link>
                 </Navbar.Brand>

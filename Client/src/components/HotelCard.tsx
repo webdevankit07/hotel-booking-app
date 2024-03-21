@@ -7,7 +7,7 @@ import { Button } from './ui/button';
 const HotelCard = ({ hotel }: { hotel: ResHotelType }) => {
     return (
         <>
-            <Card className='text-white transition-all duration-500 ease-in-out border-gray-600 shadow-lg hover:shadow-2xl bg-slate-900'>
+            <Card className='text-white transition-all duration-500 ease-in-out border-gray-500 shadow-lg hover:shadow-2xl bg-slate-900'>
                 <CardHeader className='p-3'>
                     <Link to={`detail/${hotel._id}`}>
                         <img
