@@ -17,7 +17,7 @@ const HotelDetails = () => {
         return <div className='text-gray-300'>No Hotel Found!</div>;
     }
     return (
-        <div className='my-20 space-y-6'>
+        <div className='my-10 space-y-6 md:my-20'>
             <div>
                 <span className='flex'>
                     {Array.from({ length: hotel.starRating }).map(() => (

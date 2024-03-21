@@ -18,7 +18,10 @@ const MyBookings = () => {
                     className='grid grid-cols-1 lg:grid-cols-[1fr_3fr]  bg-slate-950 text-white border-2 border-slate-300 rounded-lg p-2 md:p-4 gap-5 shadow-lg'
                 >
                     <div className='lg:w-full lg:h-[250px]'>
-                        <img src={hotel.imageUrls[0]} className='object-cover object-center w-full h-full' />
+                        <img
+                            src={hotel.imageUrls[0]}
+                            className='object-cover object-center w-full h-full rounded-t-md md:rounded-md'
+                        />
                     </div>
                     <div className='flex flex-col gap-4 overflow-y-auto max-h-[300px] p-2'>
                         <div className='text-2xl font-bold'>
